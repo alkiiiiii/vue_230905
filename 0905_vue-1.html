@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1. v-model 綁定 -->
+        <div class="demo">
+            <h2>1. v-model 綁定</h2>
+            <input type="text" class="form-control" v-model="mytitle">
+
+            <p class="h3 mt-3">你輸入的字為 : {{ mytitle }}</p>
+            <div v-text="mytitle"></div>
+            <div v-html="mytitle"></div>
+            <!-- 上方三個行為皆可達成及時監聽 反映 第3種較為危險(可直接撰寫程式) -->
+        </div>
+        <!-- 2. v-bind 綁定 -->
+        <div class="demo">
+            <h2>2. v-bind(v-bind 縮寫 = : )</h2>
+            <img v-bind:src="imgSrc" alt="" v-bind:class="classW50">
+            <img v-bind:src="imgSrc01" alt="" :class="classW25">
+            <h3 class="my-3">貼上網址更改上方圖片</h3>
+            <input type="text" class="form-control" v-model="imgSrc01">
+        </div>
+        <!-- 3. v-if v-for -->
+        <div class="demo">
+            <h2>3. v-if and v-for </h2>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(item,key) in list">
+                    {{key+1}}.{{ item.product }} 1顆 {{item.price}} 元
+                </li>
+            </ul>
+
+            <ul class="list-group">
+                <template v-for="(item,key) in list">
+                    <li class="list-group-item" v-if="item.price<100">
+                        {{key+1}}.{{ item.product }} 1顆 {{item.price}} 元
+                    </li>
+                </template>
+            </ul>
+            <hr>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" v-on:click.prevent="mylink ='草莓'" :class="{'active' :mylink=='草莓'}">草莓</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="##" v-on:click="mylink ='西瓜'" :class="{'active' :mylink=='西瓜'}">西瓜</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="##" v-on:click="mylink ='香瓜'" :class="{'active' :mylink=='香瓜'}">香瓜</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="##" v-on:click="mylink ='哈密瓜'" :class="{'active' :mylink=='哈密瓜'}">哈密瓜</a>
+                </li>
+            </ul>
+            <!-- click後面+ .prevent 或者 href="##" 都能達到不往上跳的目的 -->
+            <ul class="list-group">
+                <template v-for="(item,key) in list">
+                    <li class="list-group-item" v-if="item.product==mylink">
+                        {{key+1}}.{{ item.city }}地區 {{ item.product }} 1顆  售價{{item.price}} 元  
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    text01: 'hellow world!',
+                    text01: 'hellow world!!!!!!!!!',
+                    mytitle: 'vue 教學',
+                    imgSrc: 'immg/fuji3.jpg',
+                    imgSrc01: 'https://s.yimg.com/ny/api/res/1.2/ZZPlZR5lyqAyA3gGUokLfA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTYyNDtjZj13ZWJw/https://media.zenfs.com/zh-tw/bcc.com.tw/2fdc44e5d653aa4f386a7b8877626c32',
+                    classW50: 'w-50',
+                    classW25: 'w-25',
+                    textshow: true,
+                    mylink: '草莓',
+                    list: [
+                        {
+                            product: '草莓',
+                            price: 25,
+                            city: '南投市'
+                        },
+                        {
+                            product: '草莓',
+                            price: 30,
+                            city: '台中市'
+                        },
+                        {
+                            product: '草莓',
+                            price: 50,
+                            city: '台北市'
+                        },
+                        {
+                            product: '西瓜',
+                            price: 120,
+                            city: '台中市'
+                        },
+                        {
+                            product: '西瓜',
+                            price: 90,
+                            city: '花蓮市'
+                        },
+                        {
+                            product: '香瓜',
+                            price: 180,
+                            city: '花蓮市'
+                        },
+                        {
+                            product: '香瓜',
+                            price: 200,
+                            city: '屏東市'
+                        },
+                        {
+                            product: '哈密瓜',
+                            price: 1200,
+                            city: '台東市'
+                        },
+                        {
+                            product: '哈密瓜',
+                            price: 1500,
+                            city: '日本'
+                        },
+                    ]
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+
+</html>
